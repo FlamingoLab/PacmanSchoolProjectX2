@@ -146,7 +146,7 @@ public class Health : MonoBehaviour
     /// <summary>Callback internally invoked when the Invincibility Cooldown ends.</summary>
     private void OnCooldownEnds()
     {
-        cooldown.End();
+        //if(cooldown != null) cooldown.End(); /// This provokes a StackOverflowException...
         if(onHealthEvent != null) onHealthEvent(HealthEvent.InvincibilityEnds);
         if(onHealthInstanceEvent != null) onHealthInstanceEvent(this, HealthEvent.InvincibilityEnds);
     }

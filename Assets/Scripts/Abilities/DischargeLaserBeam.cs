@@ -183,7 +183,6 @@ public class DischargeLaserBeam : MonoBehaviour, IFiniteStateMachine<LaserState>
 	private void Awake()
 	{
 		cooldown = new Cooldown(this, cooldownDuration, OnCooldownEnds);
-		this.ChangeState(LaserState.Discharging);
 	}
 	
 	/// <summary>ShootLaserBeam's tick at each frame.</summary>

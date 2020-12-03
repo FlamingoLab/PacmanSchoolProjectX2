@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -177,7 +178,7 @@ public class AztecBoss : Boss
 	/// <summary>Callback internally called when the Boss advances stage.</summary>
 	protected override void OnStageChanged()
 	{
-		float halfHP = health.maxHP;
+		float halfHP = health.maxHP * 0.5f;
 
 		leftEyeHealth.maxHP = halfHP;
 		rightEyeHealth.maxHP = halfHP;
@@ -262,6 +263,20 @@ public class AztecBoss : Boss
 			health.GiveDamage(_amount);
 			break;
 		}
+	}
+
+	/// <returns>String representing enemy's stats.</returns>
+	public override string ToString()
+	{
+		StringBuilder builder = new StringBuilder();
+
+		builder.AppendLine(base.ToString());
+		builder.Append("Left Eye's Health: ");
+		builder.AppendLine(leftEyeHealth.ToString());
+		builder.Append("Right Eye's Health: ");
+		builder.AppendLine(rightEyeHealth.ToString());
+
+		return builder.ToString();
 	}
 
 #region Coroutines:

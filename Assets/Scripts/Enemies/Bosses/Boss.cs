@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +42,14 @@ public class Boss : Enemy
 		set { _healthDistribution = value; }
 	}
 
+	/// <summary>Resets Enemy's instance to its default values.</summary>
+	public virtual void Reset()
+	{
+		base.Reset();
+		currentStage = 0;
+		AdvanceStage();
+	}
+
 	/// <summary>Callback internally called right after Awake.</summary>
 	protected override void OnAwake()
 	{
@@ -67,12 +76,24 @@ public class Boss : Enemy
 	/// <summary>Advances Stage.</summary>
 	protected void AdvanceStage()
 	{
+		currentStage = Mathf.Min(++currentStage, stages);
 		health.maxHP = healthDistribution[currentStage];
-		currentStage = Mathf.Min(currentStage++, stages);
 		OnStageChanged();
 	}
 
 	/// <summary>Callback internally called when the Boss advances stage.</summary>
 	protected virtual void OnStageChanged() { /*...*/ }
+
+	/// <returns>String representing enemy's stats.</returns>
+	public override string ToString()
+	{
+		StringBuilder builder = new StringBuilder();
+
+		builder.AppendLine(base.ToString());
+		builder.Append("Current Stage: ");
+		builder.Append(currentStage.ToString());
+
+		return builder.ToString();
+	}
 }
 }

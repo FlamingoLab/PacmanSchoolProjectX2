@@ -196,9 +196,9 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   _stages: 3
   _healthDistribution:
-  - 0
-  - 0
-  - 0
+  - 100
+  - 100
+  - 100
   _mainRenderer: {fileID: 9111017519900524475}
   _dischargeLaserBeam: {fileID: 6669664130423580784}
   _gemRenderer: {fileID: 7555547710533803971}
@@ -221,7 +221,7 @@ MonoBehaviour:
     type: 3}
   _albedoTag:
     _tag: _Albedo
-    _ID: 480
+    _ID: 501
   _shootParabolaProjectile: {fileID: 831725651303149244}
   _radiusMargin:
     _min: 0.2

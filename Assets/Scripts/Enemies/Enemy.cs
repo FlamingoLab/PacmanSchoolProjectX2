@@ -74,6 +74,13 @@ public class Enemy : PoolGameObject, IStateMachine
 	}
 #endregion
 
+	/// <summary>Resets Enemy's instance to its default values.</summary>
+	public virtual void Reset()
+	{
+		this.ChangeState(ID_STATE_ALIVE);
+		health.Reset();
+	}
+
 	/// <summary>Callback invoked when Enemy's script is instantiated.</summary>
 	private void Awake()
 	{
@@ -177,13 +184,11 @@ public class Enemy : PoolGameObject, IStateMachine
 	}
 #endregion
 
-	/// <returns>String representing enemy's stats.</returns>
-	public override string ToString()
+	/// <returns>States to string</returns>
+	public virtual string StatesToString()
 	{
 		StringBuilder builder = new StringBuilder();
 
-		builder.Append(name);
-		builder.AppendLine(" Enemy: ");
 		builder.AppendLine("State Mask:");
 		builder.Append("Alive: ");
 		builder.AppendLine(this.HasState(ID_STATE_ALIVE).ToString());
@@ -194,7 +199,19 @@ public class Enemy : PoolGameObject, IStateMachine
 		builder.Append("FollowPlayer: ");
 		builder.AppendLine(this.HasState(ID_STATE_FOLLOWPLAYER).ToString());
 		builder.Append("Attack: ");
-		builder.AppendLine(this.HasState(ID_STATE_ATTACK).ToString());
+		builder.Append(this.HasState(ID_STATE_ATTACK).ToString());
+
+		return builder.ToString();
+	}
+
+	/// <returns>String representing enemy's stats.</returns>
+	public override string ToString()
+	{
+		StringBuilder builder = new StringBuilder();
+
+		builder.Append(name);
+		builder.AppendLine(" Enemy: ");
+		builder.AppendLine(StatesToString());
 		builder.AppendLine();
 		builder.AppendLine(health.ToString());
 
