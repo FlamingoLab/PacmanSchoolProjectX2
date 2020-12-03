@@ -149,7 +149,7 @@ MonoBehaviour:
   _damage: 5
   _speed: 10
   _lifespan: 5
-  _cooldownDuration: 0
+  _cooldownDuration: 0.2
 --- !u!135 &1929800662677603330
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ using Voidless;
 
 namespace Flamingo
 {
-public class PlayerController : Singleton<Player>
+public class PlayerController : Singleton<PlayerController>
 {
 	[Space(5f)]
 	[SerializeField] private Player _player; 						/// <summary>Player's Reference.</summary>

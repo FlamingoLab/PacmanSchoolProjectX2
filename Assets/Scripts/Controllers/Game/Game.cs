@@ -67,12 +67,17 @@ public class Game : Singleton<Game>
     /// <summary>Repositions Player and Scenario [used if player passed the Z's limits].</summary>
     /// <param name="_player">Player's Reference.</param>
     /// <param name="_scenarioGroup">Transform that contains all the scenario elements.</param>
-    public static void RepositionPlayer(Player _player, Transform _scenarioGroup)
+    public static void RepositionPlayer(Player _player, Transform _scenarioGroup = null)
     {
-        Vector3 offset = _player.rigidbody.position - _scenarioGroup.position;
+        Vector3 position = new Vector3(0.0f, 1.0f, 1.0f);
 
-        _player.rigidbody.position = new Vector3(0.0f, 1.0f, 1.0f);
-        _scenarioGroup.position = _player.rigidbody.position + offset;
+        if(_scenarioGroup != null)
+        {
+            Vector3 offset = _scenarioGroup.position - _player.rigidbody.position;
+            _scenarioGroup.position = position + offset;
+        }
+
+        _player.rigidbody.position = position;
     }
 }
 }

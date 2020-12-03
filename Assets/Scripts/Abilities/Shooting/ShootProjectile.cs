@@ -228,7 +228,7 @@ public class ShootProjectile : MonoBehaviour
         } else foreach(Transform muzzle in muzzles)
     	{
             rotation = orientationType == OrientationType.MuzzlesCenter ?
-                Quaternion.LookRotation(centerPoint - projectile.rigidbody.position) : muzzle.rotation;
+                Quaternion.LookRotation(centerPoint - muzzle.position) : muzzle.rotation;
 
     		projectile = PoolManager.RequestProjectile(faction, projectileID, muzzle.position, rotation);
     	}

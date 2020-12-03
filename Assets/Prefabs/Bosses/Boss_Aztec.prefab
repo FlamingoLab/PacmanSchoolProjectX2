@@ -560,7 +560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce7d016736953ae4cbff50ca3f30c521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _muzzle: {fileID: 0}
+  _muzzle: {fileID: 1224144377655412862}
   _length: 50
   _radius: 2
   _dischargeDuration: 2
@@ -572,7 +572,7 @@ MonoBehaviour:
   _affectable:
     serializedVersion: 2
     m_Bits: 512
-  gizmosColor: {r: 1, g: 0, b: 1, a: 1}
+  gizmosColor: {r: 0.1300379, g: 1, b: 0, a: 1}
 --- !u!1 &2911667033684838781
 GameObject:
   m_ObjectHideFlags: 0

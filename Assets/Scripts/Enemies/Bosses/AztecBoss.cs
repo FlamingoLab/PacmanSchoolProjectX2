@@ -282,14 +282,14 @@ public class AztecBoss : Boss
 	/// <summary>Projectile Shooting's Routine.</summary>
 	private IEnumerator ProjectileShootingRoutine()
 	{
-		Vector3 direction = player.ship.transform.position - shootProjectile.transform.position;
+		Vector3 direction = player.mateo.transform.position - shootProjectile.transform.position;
 		
 		while(true)
 		{
 			if(!shootProjectile.onCooldown)
 			{
 				shootProjectile.transform.rotation = Quaternion.LookRotation(direction);
-				direction = player.ship.transform.position - shootProjectile.transform.position;
+				direction = player.mateo.transform.position - shootProjectile.transform.position;
 			}
 		
 			yield return null; 
@@ -305,7 +305,7 @@ public class AztecBoss : Boss
 		while(true)
 		{
 			if(dischargeLaserBeam.state != LaserState.OnCooldown)
-			dischargeLaserBeam.PointTowards(player.ship.transform.position);
+			dischargeLaserBeam.PointTowards(player.mateo.transform.position);
 			yield return null;
 		}
 	}

@@ -21,7 +21,7 @@ public class PlayerInspector : Editor
 	{	
 		DrawDefaultInspector();
 		GUILayout.Space(20.0f);
-		if(player.ship != null && GUILayout.Button("Parent Ship")) player.ParentShip();		
+		if(player.mateo != null && GUILayout.Button("Parent Mateo")) player.ParentMateo();		
 	}
 }
 }

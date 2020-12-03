@@ -22,23 +22,17 @@ public enum Hand
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
+	public const int ID_EVENT_PASSED_Z_LIMITS = 0; 			/// <summary>Passed Z Limits' Event ID.</summary>
+
 	public event OnPlayerEvent onPlayerEvent; 				/// <summary>OnPlayerEvent's Delegate.</summary>
 
-	[SerializeField] private HitCollider _shipCollider; 	/// <summary>Ship's Collider.</summary>
-	[SerializeField] private Ship _ship; 					/// <summary>Player's Ship.</summary>
+	[SerializeField] private Mateo _mateo; 					/// <summary>Player's Mateo.</summary>
 	[SerializeField] private BarrelRoll _barrelRoll; 		/// <summary>BarrelRoll's Component.</summary>
-	[SerializeField] private Hand _hand; 					/// <summary>Hand where the Ship will be parented.</summary>
+	[SerializeField] private Hand _hand; 					/// <summary>Hand where the Mateo will be parented.</summary>
 	private OVRHead _head; 									/// <summary>Player's VR Head.</summary>
 	private Rigidbody _rigidbody; 							/// <summary>Rigidbodyu's Component.</summary>
 
 #region Getters/Setters:
-	/// <summary>Gets and Sets shipCollider property.</summary>
-	public HitCollider shipCollider
-	{
-		get { return _shipCollider; }
-		set { _shipCollider = value; }
-	}
-
 	/// <summary>Gets and Sets hand property.</summary>
 	public Hand hand
 	{
@@ -46,11 +40,11 @@ public class Player : MonoBehaviour
 		set { _hand = value; }
 	}
 
-	/// <summary>Gets and Sets ship property.</summary>
-	public Ship ship
+	/// <summary>Gets and Sets mateo property.</summary>
+	public Mateo mateo
 	{
-		get { return _ship; }
-		set { _ship = value; }
+		get { return _mateo; }
+		set { _mateo = value; }
 	}
 
 	/// <summary>Gets and Sets barrelRoll property.</summary>
@@ -84,33 +78,32 @@ public class Player : MonoBehaviour
 	/// <summary>Updates Player's instance at each Physics Thread's frame.</summary>
 	private void FixedUpdate()
 	{
-		if(ship == null) return;
+		if(mateo == null) return;
 
-		rigidbody.MovePosition(rigidbody.position + (Vector3.forward * ship.steeringVehicle.maxSpeed * Time.fixedDeltaTime));
-		if(rigidbody.position.z >= Game.data.zLimits /*&& onPlayerEvent != null*/) //onPlayerEvent(Game.ID_EVENT_PLAYER_OFFLIMITS);
-		Game.RepositionPlayer(this, transform); // Temporal shit...
+		rigidbody.MovePosition(rigidbody.position + (Vector3.forward * mateo.steeringVehicle.maxSpeed * Time.fixedDeltaTime));
+		if(rigidbody.position.z >= Game.data.zLimits && onPlayerEvent != null) onPlayerEvent(Game.ID_EVENT_PLAYER_OFFLIMITS);
 	}
 
-	/// <summary>Projects the forward position of the player's ship on given seconds.</summary>
+	/// <summary>Projects the forward position of the player's mateo on given seconds.</summary>
 	/// <param name="_time">Time projection [in seconds].</param>
 	/// <returns>Projected Player's position considering its forward displacement.</returns>
 	public Vector3 ProjectForwardPosition(float _time)
 	{
-		return ship.steeringVehicle.rigidbody.position + (Vector3.forward * ship.steeringVehicle.maxSpeed * _time);
+		return mateo.steeringVehicle.rigidbody.position + (Vector3.forward * mateo.steeringVehicle.maxSpeed * _time);
 	}
 
-	/// <summary>Parents Ship into desired Hand.</summary>
-	public void ParentShip()
+	/// <summary>Parents Mateo into desired Hand.</summary>
+	public void ParentMateo()
 	{
-		if(ship == null) return;
-		ship.transform.parent = hand == Hand.Left ? head.leftHandAnchor : head.rightHandAnchor;
+		if(mateo == null) return;
+		mateo.transform.parent = hand == Hand.Left ? head.leftHandAnchor : head.rightHandAnchor;
 	}
 
 	/// <summary>Shoots Projectile.</summary>
 	public void ShootProjectile()
 	{
-		if(ship == null) return;
-		ship.shootProjectile.Shoot();
+		if(mateo == null) return;
+		mateo.Shoot();
 	}
 
 	/// <summary>Performs Barrel Roll.</summary>
