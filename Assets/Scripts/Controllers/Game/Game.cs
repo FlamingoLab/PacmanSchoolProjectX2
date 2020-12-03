@@ -73,11 +73,12 @@ public class Game : Singleton<Game>
 
         if(_scenarioGroup != null)
         {
-            Vector3 offset = _scenarioGroup.position - _player.rigidbody.position;
-            _scenarioGroup.position = position + offset;
+            Vector3 offset = _player.transform.position - _scenarioGroup.position;
+            offset.y = 0.0f;
+            _scenarioGroup.position = position - offset;
         }
 
-        _player.rigidbody.position = position;
+        _player.transform.position = position;
     }
 }
 }

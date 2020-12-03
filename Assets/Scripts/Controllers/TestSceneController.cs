@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using Voidless;
 
 namespace Flamingo
@@ -15,6 +16,8 @@ public class TestSceneController : Singleton<TestSceneController>
 	private Boss _currentBoss; 					/// <summary>Currently selected Boss.</summary>
 #if UNITY_EDITOR
 	private Vector2 scrollPosition; 			/// <summary>GUI's Scroll Position.</summary>
+	private string damageText;
+	private float damage;
 #endif
 
 #region Getters/Setters:
@@ -63,7 +66,12 @@ public class TestSceneController : Singleton<TestSceneController>
 		if(currentBoss != null)
 		{
 			GUILayout.Label(currentBoss.ToString());
-			if(GUILayout.Button("Reset")) currentBoss.Reset();	
+
+			GUILayout.Label("Damage to Apply: ");
+			damage = VGUILayout.FloatField(damage);
+			damage = GUILayout.HorizontalSlider(damage, 0.0f, currentBoss.health.maxHP);
+			if(GUILayout.Button("Apply Damage")) currentBoss.health.GiveDamage(damage);
+			if(GUILayout.Button("Reset")) currentBoss.Reset();
 		}
 		
 		GUILayout.EndScrollView();
@@ -96,6 +104,9 @@ public class TestSceneController : Singleton<TestSceneController>
 
 			if(boss == _boss)
 			{
+#if UNITY_EDITOR
+				damage = 0.0f;
+#endif
 				currentBoss = _boss;
 				currentBoss.Reset();
 			}

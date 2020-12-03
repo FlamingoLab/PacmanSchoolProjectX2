@@ -400,6 +400,45 @@ public static class VCoroutines
 		if(onActionEnds != null) onActionEnds();
 	}
 
+	/// <summary>Changes multiuple Material colors simultaneously at a given duration.</summary>
+	/// <param name="_material">Target Material.</param>
+	/// <param name="_duration">Color change duration.</param>
+	/// <param name="onChangeEnds">Optional callback to invoke when the color changing ends.</param>
+	/// <param name="_colorTuples">Tuples that contains both the Material tag and its new destiny color.</param>
+	public static IEnumerator ChangeMaterialProperties(this Material _material, float _duration, Action onChangeEnds = null, params ValueTuple<MaterialTag, Color>[] _colorTuples)
+	{
+		float t = 0.0f;
+		float inverseDuration = 1.0f / _duration;
+		Color[] colors = new Color[_colorTuples.Length];
+
+		for(int i = 0; i < colors.Length; i++)
+		{
+			colors[i] = _material.GetColor(_colorTuples[i].value1);
+		}
+
+		while(t < 1.0f)
+		{
+			for(int i = 0; i < colors.Length; i++)
+			{
+				ValueTuple<MaterialTag, Color> tuple = _colorTuples[i];
+				Color color = Color.Lerp(colors[i], tuple.value2, t);
+
+				_material.SetColor(tuple.value1, color);
+			}
+
+			t += (Time.deltaTime * inverseDuration);
+			yield return null;
+		}
+
+		for(int i = 0; i < colors.Length; i++)
+		{
+			ValueTuple<MaterialTag, Color> tuple = _colorTuples[i];
+			_material.SetColor(tuple.value1, tuple.value2);
+		}
+
+		if(onChangeEnds != null) onChangeEnds();
+	}
+
 	/// <summary>Oscilates Renderer's Material Main Color between its original and a desired color, interpolating back and forth.</summary>
 	/// <param name="_renderer">Renderer to apply the Colro oscillation effect.</param>
 	/// <param name="_color">Desired Color.</param>

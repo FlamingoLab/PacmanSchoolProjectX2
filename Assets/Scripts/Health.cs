@@ -96,7 +96,7 @@ public class Health : MonoBehaviour
     public void GiveDamage(float _damage, bool _applyInvincibility = true)
     {
         /// If the current state is onInvincibility or the damage to receive is less or equal than '0', do nothing.
-        if(!onInvincibility || _damage <= 0.0f) return;
+        if(onInvincibility || _damage <= 0.0f) return;
 
         _damage = _damage.Clamp(0.0f, hp);
     	hp -= _damage;
@@ -135,6 +135,15 @@ public class Health : MonoBehaviour
             if(onHealthEvent != null) onHealthEvent(HealthEvent.FullyReplenished, _amount);
             if(onHealthInstanceEvent != null) onHealthInstanceEvent(this, HealthEvent.FullyReplenished, _amount);
         }
+    }
+
+    /// <summary>Sets Maximum HP.</summary>
+    /// <param name="_maxHP">Max HP.</param>
+    /// <param name="_resetHP">Reset current HP [false by default].</param>
+    public void SetMaxHP(float _maxHP, bool _resetHP = false)
+    {
+        maxHP = _maxHP;
+        if(_resetHP) Reset();
     }
 
     /// <summary>Begins BeginInvincibility's Cooldown.</summary>

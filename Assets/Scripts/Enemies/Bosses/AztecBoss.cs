@@ -21,9 +21,13 @@ public class AztecBoss : Boss
 	[SerializeField] private DischargeLaserBeam _dischargeLaserBeam; 			/// <summary>DischargeLaserBeam's Component.</summary>
 	[SerializeField] private Renderer _gemRenderer; 							/// <summary>Gem's Renderer.</summary>
 	[SerializeField] private MaterialTag _colorTag; 							/// <summary>Color's Tag fot Material.</summary>
+	[SerializeField] private MaterialTag _emissionColorTag; 					/// <summary>Color's Tag fot Material.</summary>
 	[SerializeField] private Color _stage1Color; 								/// <summary>Stage 1's Color for the Gem.</summary>
+	[SerializeField] private Color _stage1EmissionColor; 						/// <summary>Stage 1's Emission Color for the Gem.</summary>
 	[SerializeField] private Color _stage2Color; 								/// <summary>Stage 2's Color for the Gem.</summary>
+	[SerializeField] private Color _stage2EmissionColor; 						/// <summary>Stage 1's Emission Color for the Gem.</summary>
 	[SerializeField] private Color _stage3Color; 								/// <summary>Stage 3's Color for the Gem.</summary>
+	[SerializeField] private Color _stage3EmissionColor; 						/// <summary>Stage 1's Emission Color for the Gem.</summary>
 	[Space(5f)]
 	[Header("Eyes' Attributes:")]
 	[SerializeField] private Health _leftEyeHealth; 							/// <summary>Left Eye's Health.</summary>
@@ -70,17 +74,29 @@ public class AztecBoss : Boss
 	/// <summary>Gets colorTag property.</summary>
 	public MaterialTag colorTag { get { return _colorTag; } }
 
+	/// <summary>Gets emissionColorTag property.</summary>
+	public MaterialTag emissionColorTag { get { return _emissionColorTag; } }
+
 	/// <summary>Gets albedoTag property.</summary>
 	public MaterialTag albedoTag { get { return _albedoTag; } }
 
 	/// <summary>Gets stage1Color property.</summary>
 	public Color stage1Color { get { return _stage1Color; } }
 
+	/// <summary>Gets stage1EmissionColor property.</summary>
+	public Color stage1EmissionColor { get { return _stage1EmissionColor; } }
+
 	/// <summary>Gets stage2Color property.</summary>
 	public Color stage2Color { get { return _stage2Color; } }
 
+	/// <summary>Gets stage2EmissionColor property.</summary>
+	public Color stage2EmissionColor { get { return _stage2EmissionColor; } }
+
 	/// <summary>Gets stage3Color property.</summary>
 	public Color stage3Color { get { return _stage3Color; } }
+
+	/// <summary>Gets stage3EmissionColor property.</summary>
+	public Color stage3EmissionColor { get { return _stage3EmissionColor; } }
 
 	/// <summary>Gets leftEyeHealth property.</summary>
 	public Health leftEyeHealth { get { return _leftEyeHealth; } }
@@ -167,7 +183,7 @@ public class AztecBoss : Boss
 		tackle.onStateChange += OnTackleStateChange;
 
 		keepOffsetFromPlayer.ignoreAxes = Axes3D.None;
-		stomp.Begin();
+		//stomp.Begin();
 	}
 	/// <summary>Updates AztecBoss's instance at each Physics Thread's frame.</summary>
 	private void FixedUpdate()
@@ -180,8 +196,8 @@ public class AztecBoss : Boss
 	{
 		float halfHP = health.maxHP * 0.5f;
 
-		leftEyeHealth.maxHP = halfHP;
-		rightEyeHealth.maxHP = halfHP;
+		leftEyeHealth.SetMaxHP(halfHP, true);
+		rightEyeHealth.SetMaxHP(halfHP, true);
 
 		switch(currentStage)
 		{
@@ -261,6 +277,10 @@ public class AztecBoss : Boss
 			case HealthEvent.Depleted:
 			_health.transform.localRotation = Quaternion.Lerp(Quaternion.identity, targetRotation, 1.0f - _health.hpRatio);
 			health.GiveDamage(_amount);
+			break;
+
+			case HealthEvent.FullyDepleted:
+			_health.transform.localRotation = targetRotation;
 			break;
 		}
 	}

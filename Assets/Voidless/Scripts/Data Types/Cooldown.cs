@@ -54,6 +54,7 @@ public class Cooldown
 	{
 		duration = _duration;
 		progress = 1.0f;
+		coroutine = null;
 		OnCooldownEnds = new UnityEvent();
 	}
 

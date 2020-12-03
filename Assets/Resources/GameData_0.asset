@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playAreaDimensions: {x: 2, y: 2, z: 2}
   _playAreaDivisions: {x: 5, y: 5, z: 5}
-  _zLimits: 50
+  _zLimits: 10
   _gravityScale: 2.5
   _playerLayer:
     _value: 9
