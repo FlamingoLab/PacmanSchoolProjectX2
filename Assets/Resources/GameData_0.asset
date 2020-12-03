@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab007d89b552cf24283695e437cfbdc6, type: 3}
+  m_Name: GameData_0
+  m_EditorClassIdentifier: 
+  _playAreaDimensions: {x: 2, y: 2, z: 2}
+  _playAreaDivisions: {x: 5, y: 5, z: 5}
+  _zLimits: 50
+  _gravityScale: 2.5
+  _playerLayer:
+    _value: 9
+    _name: Player
+    index: 6
+  _enemyLayer:
+    _value: 8
+    _name: Enemy
+    index: 5
+  _playerProjectiles:
+  - {fileID: 1929800662677603331, guid: 59f46d7cdc27ef844bbb89b93dc705c1, type: 3}
+  _enemyProjectiles:
+  - {fileID: 1929800662677603331, guid: f62ad54de75b07b4a90e57b2be1a788c, type: 3}
+  - {fileID: 1929800662677603331, guid: cb37b8ed77bab54499b8b342b9272c05, type: 3}
+  - {fileID: 7635553070770174783, guid: 97b827fd95ea08e4da2d6d61a8699279, type: 3}
+  - {fileID: 8137719044517310094, guid: 591cf23528141a74489bd35a3f73061c, type: 3}
+  _enemyParabolaProjectiles:
+  - {fileID: 5106789399468851025, guid: 243042555b2ac4240a41b3e439ea1b6c, type: 3}
+  - {fileID: 1796793400705204866, guid: 49187cbe4980a97418c6ad9fd35496e2, type: 3}
+  - {fileID: 1665993774908429236, guid: 3309280fb5d03d34a81e3698fc6c5cb6, type: 3}
+  - {fileID: 4349449441180121093, guid: 0e023ea0c77e3e548bda5c5ade69c578, type: 3}
+  - {fileID: 5013505305043784276, guid: 85a997ea7f52b2641bb8ef10c38b8236, type: 3}
+  - {fileID: 434792020001162991, guid: 5f7f34a67ba2670469850f092b820e0b, type: 3}
+  _gizmosColor: {r: 0, g: 1, b: 1, a: 0.39215687}
+  _traversableColor: {r: 0, g: 1, b: 0, a: 0.39215687}
+  _nonTraversableColor: {r: 1, g: 0, b: 0, a: 0.39215687}
