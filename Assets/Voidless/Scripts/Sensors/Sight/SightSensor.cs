@@ -66,6 +66,7 @@ public abstract class SightSensor : Sensor
 		Vector3 inflation = Vector3.one * INFLATION;
 		int instanceID = 0;
 
+		if(inFOV != null)
 		foreach(Collider collider in inFOV.Values)
 		{
 			instanceID = collider.gameObject.GetInstanceID();
@@ -80,6 +81,7 @@ public abstract class SightSensor : Sensor
 
 		Gizmos.color = color.WithAlpha(0.5f);
 
+		if(inSight != null)
 		foreach(Collider collider in inSight.Values)
 		{
 			instanceID = collider.gameObject.GetInstanceID();

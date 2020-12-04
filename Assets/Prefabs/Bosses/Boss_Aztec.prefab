@@ -202,12 +202,19 @@ MonoBehaviour:
   _mainRenderer: {fileID: 9111017519900524475}
   _dischargeLaserBeam: {fileID: 6669664130423580784}
   _gemRenderer: {fileID: 7555547710533803971}
+  _colorInterpolationDuration: 1.5
   _colorTag:
     _tag: _Color
     _ID: 11
+  _emissionColorTag:
+    _tag: _EmissionColor
+    _ID: 131
   _stage1Color: {r: 0, g: 1, b: 0, a: 1}
+  _stage1EmissionColor: {r: 0.05490196, g: 0.7647059, b: 0.13333334, a: 1}
   _stage2Color: {r: 1, g: 0, b: 0, a: 1}
+  _stage2EmissionColor: {r: 0.8396226, g: 0.06732824, b: 0.06732824, a: 1}
   _stage3Color: {r: 0, g: 1, b: 1, a: 1}
+  _stage3EmissionColor: {r: 0, g: 0.8018868, b: 0.8018868, a: 1}
   _leftEyeHealth: {fileID: 4532170441759902933}
   _rightEyeHealth: {fileID: 3789662833449574020}
   _targetRotation:
@@ -217,11 +224,11 @@ MonoBehaviour:
   _rightEyeRenderer: {fileID: 9158957411096985858}
   _stage1And2EyeTexture: {fileID: 2800000, guid: 57d33600db70b3145b13668a09340d5c,
     type: 3}
-  _stage2And3EyeTexture: {fileID: 2800000, guid: 91660dc565da004499feb1b35c5d2cd5,
+  _stage2And3EyeTexture: {fileID: 2800000, guid: b915da41e598d74498393d6265f8c74a,
     type: 3}
   _albedoTag:
-    _tag: _Albedo
-    _ID: 501
+    _tag: _MainTex
+    _ID: 1
   _shootParabolaProjectile: {fileID: 831725651303149244}
   _radiusMargin:
     _min: 0.2

@@ -103,7 +103,8 @@ public class Player : MonoBehaviour
 	public void ShootProjectile()
 	{
 		if(mateo == null) return;
-		mateo.Shoot();
+		/// mateo.Shoot(); /// This provokes a StackOverflowException
+		mateo.shootProjectile.Shoot();
 	}
 
 	/// <summary>Performs Barrel Roll.</summary>

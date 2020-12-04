@@ -20,6 +20,7 @@ public class AztecBoss : Boss
 	[Header("Gem's Attributes:")]
 	[SerializeField] private DischargeLaserBeam _dischargeLaserBeam; 			/// <summary>DischargeLaserBeam's Component.</summary>
 	[SerializeField] private Renderer _gemRenderer; 							/// <summary>Gem's Renderer.</summary>
+	[SerializeField] private float _colorInterpolationDuration; 				/// <summary>Color Interpolation's Duration.</summary>
 	[SerializeField] private MaterialTag _colorTag; 							/// <summary>Color's Tag fot Material.</summary>
 	[SerializeField] private MaterialTag _emissionColorTag; 					/// <summary>Color's Tag fot Material.</summary>
 	[SerializeField] private Color _stage1Color; 								/// <summary>Stage 1's Color for the Gem.</summary>
@@ -54,6 +55,7 @@ public class AztecBoss : Boss
 	private Tackle _tackle; 													/// <summary>Tackle's Component.</summary>
 	private Stomp _stomp; 														/// <summary>Stomp's Component.</summary>
 	private Coroutine coroutine; 												/// <summary>Coroutine's Reference.</summary>
+	private Coroutine stageChangeCoroutine; 									/// <summary>State Change's Coroutine Reference.</summary>
 
 #region Getters/Setters:
 	/// <summary>Gets mainRenderer property.</summary>
@@ -70,6 +72,9 @@ public class AztecBoss : Boss
 
 	/// <summary>Gets dischargeLaserBeam property.</summary>
 	public DischargeLaserBeam dischargeLaserBeam { get { return _dischargeLaserBeam; } }
+
+	/// <summary>Gets colorInterpolationDuration property.</summary>
+	public float colorInterpolationDuration { get { return _colorInterpolationDuration; } }
 
 	/// <summary>Gets colorTag property.</summary>
 	public MaterialTag colorTag { get { return _colorTag; } }
@@ -202,12 +207,36 @@ public class AztecBoss : Boss
 		switch(currentStage)
 		{
 			case STAGE_1:
+			leftEyeHealth.transform.localRotation = Quaternion.identity;
+			rightEyeHealth.transform.localRotation = Quaternion.identity;
+			/*this.StartCoroutine(gemRenderer.material.ChangeColors(
+				colorInterpolationDuration,
+				null,
+				new Voidless.ValueTuple<MaterialTag, Color>(colorTag, stage1Color), new Voidless.ValueTuple<MaterialTag, Color>(emissionColorTag, stage1EmissionColor)),
+				ref stageChangeCoroutine
+			);*/
 			break;
 
 			case STAGE_2:
+			leftEyeHealth.transform.localRotation = Quaternion.identity;
+			rightEyeHealth.transform.localRotation = Quaternion.identity;
+			this.StartCoroutine(gemRenderer.material.ChangeColors(
+				colorInterpolationDuration,
+				null,
+				new Voidless.ValueTuple<MaterialTag, Color>(colorTag, stage2Color), new Voidless.ValueTuple<MaterialTag, Color>(emissionColorTag, stage2EmissionColor)),
+				ref stageChangeCoroutine
+			);
+			leftEyeRenderer.material.SetTexture(albedoTag, stage2And3EyeTexture);
+			rightEyeRenderer.material.SetTexture(albedoTag, stage2And3EyeTexture);
 			break;
 
 			case STAGE_3:
+			this.StartCoroutine(gemRenderer.material.ChangeColors(
+				colorInterpolationDuration,
+				null,
+				new Voidless.ValueTuple<MaterialTag, Color>(colorTag, stage3Color), new Voidless.ValueTuple<MaterialTag, Color>(emissionColorTag, stage3EmissionColor)),
+				ref stageChangeCoroutine
+			);
 			break;
 		}
 	}
@@ -280,7 +309,7 @@ public class AztecBoss : Boss
 			break;
 
 			case HealthEvent.FullyDepleted:
-			_health.transform.localRotation = targetRotation;
+			health.GiveDamage(_amount);
 			break;
 		}
 	}
@@ -300,6 +329,18 @@ public class AztecBoss : Boss
 	}
 
 #region Coroutines:
+	private IEnumerator Stage1Routine()
+	{
+		IEnumerator mandalaShootingRoutine = MandalaShootingRoutine();
+		IEnumerator projectileShootingRoutine = ProjectileShootingRoutine();
+		IEnumerator laserBeamEmissionRoutine = LaserBeamEmissionRoutine();
+
+		while(true)
+		{
+			yield return null;
+		}
+	}
+
 	/// <summary>Mandala Shooting's Routine.</summary>
 	private IEnumerator MandalaShootingRoutine()
 	{

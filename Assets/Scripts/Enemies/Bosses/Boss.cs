@@ -76,8 +76,8 @@ public class Boss : Enemy
 	/// <summary>Advances Stage.</summary>
 	protected void AdvanceStage()
 	{
-		currentStage = Mathf.Min(++currentStage, stages);
-		health.SetMaxHP(healthDistribution[currentStage], true);
+		currentStage = Mathf.Min(currentStage, stages);
+		health.SetMaxHP(healthDistribution[currentStage++], true);
 		OnStageChanged();
 	}
 

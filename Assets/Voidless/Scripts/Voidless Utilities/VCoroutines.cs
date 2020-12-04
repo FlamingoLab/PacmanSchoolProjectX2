@@ -405,7 +405,7 @@ public static class VCoroutines
 	/// <param name="_duration">Color change duration.</param>
 	/// <param name="onChangeEnds">Optional callback to invoke when the color changing ends.</param>
 	/// <param name="_colorTuples">Tuples that contains both the Material tag and its new destiny color.</param>
-	public static IEnumerator ChangeMaterialProperties(this Material _material, float _duration, Action onChangeEnds = null, params ValueTuple<MaterialTag, Color>[] _colorTuples)
+	public static IEnumerator ChangeColors(this Material _material, float _duration, Action onChangeEnds = null, params ValueTuple<MaterialTag, Color>[] _colorTuples)
 	{
 		float t = 0.0f;
 		float inverseDuration = 1.0f / _duration;
