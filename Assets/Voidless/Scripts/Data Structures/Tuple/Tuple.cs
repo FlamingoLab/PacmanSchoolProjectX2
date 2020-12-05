@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Voidless
 {
-[Serializable]
+[System.Serializable]
 public class Tuple<T1, T2>
 {
 	public T1 value1; 	/// <summary>Item 1.</summary>

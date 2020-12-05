@@ -62,6 +62,14 @@ public class SecondsDelayWait : VYieldInstruction
 		enumerator = Operation();
 	}
 
+	/// <summary>Changes duration and resets the Yield Instruction.</summary>
+	/// <param name="_waitDuration">New Wait Duration.</param>
+	public void ChangeDurationAndReset(float _waitDuration)
+	{
+		waitDuration = _waitDuration;
+		enumerator = Operation();
+	}
+
 	/// <summary>Yield Instruction's Operation.</summary>
 	protected override IEnumerator Operation()
 	{

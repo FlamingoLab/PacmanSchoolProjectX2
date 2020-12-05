@@ -199,7 +199,11 @@ MonoBehaviour:
   - 100
   - 100
   - 100
-  _mainRenderer: {fileID: 9111017519900524475}
+  _attackCooldown:
+    _min: 0
+    _max: 1.7
+  _projectilesShootDuration: 5
+  _mandalasShootDuration: 5
   _dischargeLaserBeam: {fileID: 6669664130423580784}
   _gemRenderer: {fileID: 7555547710533803971}
   _colorInterpolationDuration: 1.5

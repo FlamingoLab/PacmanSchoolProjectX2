@@ -106,14 +106,14 @@ public class Health : MonoBehaviour
             if(onHealthEvent != null) onHealthEvent(HealthEvent.Depleted, _damage);
             if(onHealthInstanceEvent != null) onHealthInstanceEvent(this, HealthEvent.Depleted, _damage);
 
-            if(invincibilityDuration > 0.0f && _applyInvincibility)
-            BeginInvincibilityCooldown();
-
         } else if(hp == 0.0)
         {
             if(onHealthEvent != null) onHealthEvent(HealthEvent.FullyDepleted);
             if(onHealthInstanceEvent != null) onHealthInstanceEvent(this, HealthEvent.FullyDepleted, _damage);
         }
+
+        if(invincibilityDuration > 0.0f && _applyInvincibility)
+        BeginInvincibilityCooldown();
     }
 
     /// <summary>Replenishes Health.</summary>

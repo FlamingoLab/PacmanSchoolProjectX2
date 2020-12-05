@@ -15,7 +15,9 @@ public class AztecBoss : Boss
 {
 	[Space(5f)]
 	[Header("Aztec Boss' Attributes:")]
-	[SerializeField] private Renderer _mainRenderer; 							/// <summary>Boss' main Renderer.</summary>
+	[SerializeField] private FloatRange _attackCooldown; 						/// <summary>Attack's Cooldown.</summary>
+	[SerializeField] private float _projectilesShootDuration; 					/// <summary>Projectiles' Shooting Duration.</summary>
+	[SerializeField] private float _mandalasShootDuration; 						/// <summary>Mandala's Shooting Duration.</summary>
 	[Space(5f)]
 	[Header("Gem's Attributes:")]
 	[SerializeField] private DischargeLaserBeam _dischargeLaserBeam; 			/// <summary>DischargeLaserBeam's Component.</summary>
@@ -56,11 +58,9 @@ public class AztecBoss : Boss
 	private Stomp _stomp; 														/// <summary>Stomp's Component.</summary>
 	private Coroutine coroutine; 												/// <summary>Coroutine's Reference.</summary>
 	private Coroutine stageChangeCoroutine; 									/// <summary>State Change's Coroutine Reference.</summary>
+	private Coroutine stageRoutine; 											/// <summary>Stage's Routine Coroutine Reference.</summary>
 
 #region Getters/Setters:
-	/// <summary>Gets mainRenderer property.</summary>
-	public Renderer mainRenderer { get { return _mainRenderer; } }
-
 	/// <summary>Gets gemRenderer property.</summary>
 	public Renderer gemRenderer { get { return _gemRenderer; } }
 
@@ -72,6 +72,12 @@ public class AztecBoss : Boss
 
 	/// <summary>Gets dischargeLaserBeam property.</summary>
 	public DischargeLaserBeam dischargeLaserBeam { get { return _dischargeLaserBeam; } }
+
+	/// <summary>Gets projectilesShootDuration property.</summary>
+	public float projectilesShootDuration { get { return _projectilesShootDuration; } }
+
+	/// <summary>Gets mandalasShootDuration property.</summary>
+	public float mandalasShootDuration { get { return _mandalasShootDuration; } }
 
 	/// <summary>Gets colorInterpolationDuration property.</summary>
 	public float colorInterpolationDuration { get { return _colorInterpolationDuration; } }
@@ -126,6 +132,9 @@ public class AztecBoss : Boss
 
 	/// <summary>Gets shootParabolaProjectile property.</summary>
 	public ShootParabolaProjectile shootParabolaProjectile { get { return _shootParabolaProjectile; } }
+
+	/// <summary>Gets attackCooldown property.</summary>
+	public FloatRange attackCooldown { get { return _attackCooldown; } }
 
 	/// <summary>Gets radiusMargin property.</summary>
 	public FloatRange radiusMargin { get { return _radiusMargin; } }
@@ -228,6 +237,7 @@ public class AztecBoss : Boss
 			);
 			leftEyeRenderer.material.SetTexture(albedoTag, stage2And3EyeTexture);
 			rightEyeRenderer.material.SetTexture(albedoTag, stage2And3EyeTexture);
+			this.StartCoroutine(Stage1Routine(), ref stageRoutine);
 			break;
 
 			case STAGE_3:
@@ -331,20 +341,35 @@ public class AztecBoss : Boss
 #region Coroutines:
 	private IEnumerator Stage1Routine()
 	{
-		IEnumerator mandalaShootingRoutine = MandalaShootingRoutine();
-		IEnumerator projectileShootingRoutine = ProjectileShootingRoutine();
-		IEnumerator laserBeamEmissionRoutine = LaserBeamEmissionRoutine();
+		IEnumerator mandalaShootingRoutine = null;
+		IEnumerator projectileShootingRoutine = null;
+		IEnumerator laserBeamEmissionRoutine = null;
+		SecondsDelayWait wait = null; 
 
 		while(true)
 		{
-			yield return null;
+			mandalaShootingRoutine = MandalaShootingRoutine();
+			projectileShootingRoutine = ProjectileShootingRoutine();
+			laserBeamEmissionRoutine = LaserBeamEmissionRoutine();
+			wait = new SecondsDelayWait(attackCooldown.Random()); 
+
+			while(mandalaShootingRoutine.MoveNext()) yield return null;
+			while(wait.MoveNext()) yield return null;
+			while(projectileShootingRoutine.MoveNext()) yield return null;
+			wait.ChangeDurationAndReset(attackCooldown.Random());
+			while(wait.MoveNext()) yield return null;
+			while(laserBeamEmissionRoutine.MoveNext()) yield return null;
+			wait.ChangeDurationAndReset(attackCooldown.Random());
+			while(wait.MoveNext()) yield return null;
 		}
 	}
 
 	/// <summary>Mandala Shooting's Routine.</summary>
 	private IEnumerator MandalaShootingRoutine()
 	{
-		while(true)
+		SecondsDelayWait wait = new SecondsDelayWait(mandalasShootDuration);
+		
+		while(wait.MoveNext())
 		{
 			if(!shootMandalas.onCooldown)
 			{
@@ -359,8 +384,9 @@ public class AztecBoss : Boss
 	private IEnumerator ProjectileShootingRoutine()
 	{
 		Vector3 direction = player.mateo.transform.position - shootProjectile.transform.position;
-		
-		while(true)
+		SecondsDelayWait wait = new SecondsDelayWait(projectilesShootDuration);
+
+		while(wait.MoveNext())
 		{
 			if(!shootProjectile.onCooldown)
 			{
@@ -400,8 +426,7 @@ public class AztecBoss : Boss
 
 			while(wait.MoveNext()) yield return null;
 
-			wait.Reset();
-			wait.waitDuration = rubbleShotInterval.Random();
+			wait.ChangeDurationAndReset(rubbleShotInterval.Random());
 		}
 	}
 #endregion
